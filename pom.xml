@@ -91,6 +91,8 @@
         <wrenBuildToolsVersion>1.2.0</wrenBuildToolsVersion>
         <pmdPluginVersion>3.21.2</pmdPluginVersion>
         <jxrPluginVersion>3.3.2</jxrPluginVersion>
+        <sonar.organization>adela-domokosova</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
 
     <dependencyManagement>
@@ -157,6 +159,11 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>5.1.0.4751</version>
             </plugin>
         </plugins>
     </build>
