@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    The contents of this file are subject to the terms of the Common Development and
+    Distribution License (the License). You may not use this file except in compliance with the
+    License.
+
+    You can obtain a copy of the License at legal/CDDLv1.1.txt. See the License for the
+    specific language governing permission and limitations under the License.
+
+    When distributing Covered Software, include this CDDL Header Notice in each file and include
+    the License file at legal/CDDLv1.1.txt. If applicable, add the following below the CDDL
+    Header, with the fields enclosed by brackets [] replaced by your own identifying
+    information: "Portions copyright [year] [name of copyright owner]".
+
+    Copyright (c) 2015 ForgeRock AS. All Rights Reserved
+    Portions Copyright 2017-2024 Wren Security.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.wrensecurity.commons</groupId>
+        <artifactId>forgerock-selfservice</artifactId>
+        <version>22.7.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>forgerock-selfservice-example-ui</artifactId>
+
+    <name>Wren Security Commons Self Service - Example UI</name>
+    <description>UI for Wren Security Self-Service Example</description>
+
+    <properties>
+        <wrensec-ui.version>23.1.0</wrensec-ui.version>
+        <node.install.directory>${project.basedir}</node.install.directory>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.wrensecurity.commons</groupId>
+            <artifactId>wrensec-ui-commons</artifactId>
+            <version>${wrensec-ui.version}</version>
+            <type>zip</type>
+            <classifier>user</classifier>
+        </dependency>
+
+        <dependency>
+            <groupId>org.wrensecurity.commons</groupId>
+            <artifactId>wrensec-ui-commons</artifactId>
+            <version>${wrensec-ui.version}</version>
+            <type>zip</type>
+            <classifier>build</classifier>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+
+                <executions>
+                    <execution>
+                        <phase>process-resources</phase>
+
+                        <goals>
+                            <goal>resources</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+
+                <executions>
+                    <execution>
+                        <id>unpack</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.wrensecurity.commons</groupId>
+                                    <artifactId>wrensec-ui-commons</artifactId>
+                                    <version>${wrensec-ui.version}</version>
+                                    <type>zip</type>
+                                    <classifier>user</classifier>
+                                    <outputDirectory>${project.build.directory}/ui-compose</outputDirectory>
+                                </artifactItem>
+
+                                <artifactItem>
+                                    <groupId>org.wrensecurity.commons</groupId>
+                                    <artifactId>wrensec-ui-commons</artifactId>
+                                    <version>${wrensec-ui.version}</version>
+                                    <type>zip</type>
+                                    <classifier>build</classifier>
+                                    <outputDirectory>${project.build.directory}/ui-libs</outputDirectory>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+                <version>1.14.2</version>
+
+                <configuration>
+                    <installDirectory>${project.parent.basedir}</installDirectory>
+                    <nodeVersion>v18.16.0</nodeVersion>
+                    <npmVersion>8.19.4</npmVersion>
+                    <nodeDownloadRoot>https://nodejs.org/dist/</nodeDownloadRoot>
+                    <npmDownloadRoot>https://wrensecurity.jfrog.io/artifactory/api/npm/npm-virtual/npm/-/</npmDownloadRoot>
+                </configuration>
+
+                <executions>
+                    <execution>
+                        <id>install-node-and-npm</id>
+                        <phase>initialize</phase>
+
+                        <goals>
+                            <goal>install-node-and-npm</goal>
+                        </goals>
+                    </execution>
+
+                    <execution>
+                        <id>npm-install</id>
+                        <phase>initialize</phase>
+
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                    </execution>
+
+                    <execution>
+                        <id>npm-build</id>
+                        <phase>process-resources</phase>
+
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+
+                        <configuration>
+                            <arguments>run build -- --target-version=${project.version}</arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+
+                <executions>
+                    <execution>
+                        <id>build-final-zip</id>
+                        <phase>package</phase>
+
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+
+                        <configuration>
+                            <descriptors>
+                                <descriptor>src/main/assembly/zip.xml</descriptor>
+                            </descriptors>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

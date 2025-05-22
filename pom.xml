@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+   The contents of this file are subject to the terms of the Common Development and
+   Distribution License (the License). You may not use this file except in compliance with the
+   License.
+
+   You can obtain a copy of the License at legal/CDDLv1.0.txt. See the License for the
+   specific language governing permission and limitations under the License.
+
+   When distributing Covered Software, include this CDDL Header Notice in each file and include
+   the License file at legal/CDDLv1.0.txt. If applicable, add the following below the CDDL
+   Header, with the fields enclosed by brackets [] replaced by your own identifying
+   information: "Portions copyright [year] [name of copyright owner]".
+
+   Copyright 2015-2016 ForgeRock AS.
+   Portions Copyright 2017-2018 Wren Security.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.wrensecurity</groupId>
+        <artifactId>wrensec-parent</artifactId>
+        <version>4.0.2</version>
+        <relativePath />
+    </parent>
+
+    <groupId>org.wrensecurity.commons</groupId>
+    <artifactId>commons-parent</artifactId>
+    <version>22.7.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>Wren Security Commons - Parent</name>
+    <description>
+        This group modules includes the Wren Security common components.
+    </description>
+    <url>https://github.com/WrenSecurity/wrensec-commons</url>
+
+    <licenses>
+        <license>
+            <name>CDDL-1.0</name>
+            <url>http://opensource.org/licenses/CDDL-1.0</url>
+            <comments>Common Development and Distribution License (CDDL) 1.0</comments>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <issueManagement>
+        <system>GitHub Issues</system>
+        <url>https://github.com/WrenSecurity/wrensec-commons/issues</url>
+    </issueManagement>
+
+    <scm>
+        <url>https://github.com/WrenSecurity/wrensec-commons</url>
+        <connection>scm:git:git://github.com/WrenSecurity/wrensec-commons.git</connection>
+        <developerConnection>scm:git:git@github.com:WrenSecurity/wrensec-commons.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
+
+    <repositories>
+        <repository>
+            <id>wrensecurity-releases</id>
+            <name>Wren Security Release Repository</name>
+            <url>https://wrensecurity.jfrog.io/wrensecurity/releases</url>
+
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+
+        <repository>
+            <id>wrensecurity-snapshots</id>
+            <name>Wren Security Snapshot Repository</name>
+            <url>https://wrensecurity.jfrog.io/wrensecurity/snapshots</url>
+
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </repository>
+    </repositories>
+
+    <properties>
+        <wrenBuildToolsVersion>1.2.0</wrenBuildToolsVersion>
+        <pmdPluginVersion>3.21.2</pmdPluginVersion>
+        <jxrPluginVersion>3.3.2</jxrPluginVersion>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.wrensecurity.commons</groupId>
+                <artifactId>commons-bom</artifactId>
+                <version>${project.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <distributionManagement>
+        <site>
+            <id>local</id>
+            <url>file:${maven.multiModuleProjectDirectory}/target/deploy/</url>
+        </site>
+    </distributionManagement>
+
+    <modules>
+        <module>commons-bom</module>
+        <module>audit</module>
+        <module>auth-filters</module>
+        <module>bloomfilter</module>
+        <module>doc-maven</module>
+        <module>guice</module>
+        <module>http-framework</module>
+        <module>i18n</module>
+        <module>json-crypto</module>
+        <module>json-ref</module>
+        <module>json-schema</module>
+        <module>json-web-token</module>
+        <module>rest</module>
+        <module>self-service</module>
+        <module>util</module>
+        <module>security</module>
+    </modules>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <!-- TODO: Move into `wrensec-parent` -->
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>clirr-maven-plugin</artifactId>
+                    <version>${clirrPluginVersion}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+
+                <executions>
+                    <execution>
+                        <phase>verify</phase>
+
+                        <goals>
+                            <goal>javadoc</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>${checkstylePluginVersion}</version>
+
+                <configuration>
+                    <failsOnError>false</failsOnError>
+                </configuration>
+
+                <reportSets>
+                    <reportSet>
+                        <id>aggregate</id>
+                        <inherited>false</inherited>
+
+                        <reports>
+                            <report>checkstyle-aggregate</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jxr-plugin</artifactId>
+                <version>${jxrPluginVersion}</version>
+
+                <reportSets>
+                    <reportSet>
+                        <id>default</id>
+
+                        <reports>
+                            <report>jxr-no-fork</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>${pmdPluginVersion}</version>
+
+                <reportSets>
+                    <reportSet>
+                        <id>aggregate</id>
+                        <inherited>false</inherited>
+
+                        <reports>
+                            <!-- execute within the same session to correctly resolve local plugin deps -->
+                            <report>aggregate-pmd-no-fork</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+        </plugins>
+    </reporting>
+</project>

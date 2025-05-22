@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ The contents of this file are subject to the terms of the Common Development and
+  ~ Distribution License (the License). You may not use this file except in compliance with the License.
+  ~
+  ~ You can obtain a copy of the License at legal/CDDLv1.0.txt. See the License for the
+  ~ specific language governing permission and limitations under the License.
+  ~
+  ~ When distributing Covered Software, include this CDDL Header Notice in each file and include
+  ~ the License file at legal/CDDLv1.0.txt. If applicable, add the following below the CDDL
+  ~ Header, with the fields enclosed by brackets [] replaced by your own identifying
+  ~ information: "Portions copyright [year] [name of copyright owner]".
+  ~
+  ~ Copyright 2015-2016 ForgeRock AS.
+  ~ Portions Copyright 2018 Wren Security.
+  -->
+<differences>
+<!--
+For specifying ignored differences, see:
+  http://www.mojohaus.org/clirr-maven-plugin/examples/ignored-differences.html
+
+path/methods/to/from matching can either use:
+- regex when surrounded with '%regex[]'
+- ant style path matching when surrounded with '%ant[]'
+- ant style path matching when not surrounded by anything
+
+For path/methods matching in maven-clirr-plugin see (change version numbers accordingly):
+  http://svn.codehaus.org/mojo/tags/clirr-maven-plugin-2.6.1/src/main/java/org/codehaus/mojo/clirr/Difference.java
+  http://grepcode.com/file/repo1.maven.org/maven2/org.codehaus.plexus/plexus-utils/3.0.7/org/codehaus/plexus/util/SelectorUtils.java
+For a description of ant style path expressions see:
+  http://ant.apache.org/manual/dirtasks.html#patterns
+
+Note: waiting on https://jira.codehaus.org/browse/MCLIRR-62 to be resolved to avoid the need to use \s* in the '<to>' tags.
+-->
+<!-- Here is an example
+  <difference>
+    <className>org/forgerock/opendj/ldap/Connections</className>
+    <differenceType>7005</differenceType>
+    <method>%regex[org\.forgerock\.opendj\.ldap\.ConnectionFactory newHeartBeatConnectionFactory\(org\.forgerock\.opendj\.ldap\.ConnectionFactory, long, java\.util\.concurrent\.TimeUnit, org\.forgerock\.opendj\.ldap\.requests\.SearchRequest(, java\.util\.concurrent\.ScheduledExecutorService)?\)]</method>
+    <to>%regex[org\.forgerock\.opendj\.ldap\.ConnectionFactory newHeartBeatConnectionFactory\(org\.forgerock\.opendj\.ldap\.ConnectionFactory,\s*long,\s*long,\s*java\.util\.concurrent\.TimeUnit(,\s*org\.forgerock\.opendj\.ldap\.requests\.SearchRequest(,\s*java\.util\.concurrent\.ScheduledExecutorService)?)?\)]</to>
+    <justification>OPENDJ-1058: Added a timeout parameter to actively shutdown dead connections</justification>
+  </difference>
+-->
+	<difference>
+  <className>org/forgerock/json/JsonValue</className>
+  <differenceType>7006</differenceType>
+  <method>java.lang.Object object(java.util.Map$Entry[])</method>
+                <to>java.util.Map</to>
+  <justification>Update return type to avoid cast</justification>
+	</difference>
+ <difference>
+  <className>org/forgerock/json/JsonValue</className>
+  <differenceType>7002</differenceType>
+  <method>java.util.Set set(java.lang.Object[])</method>
+  <justification>Removal of the set-backing feature</justification>
+ </difference>
+ <difference>
+  <className>org/forgerock/json/JsonValue</className>
+  <differenceType>7002</differenceType>
+  <method>java.util.Set asSet()</method>
+  <justification>Removal of the set-backing feature</justification>
+ </difference>
+ <difference>
+  <className>org/forgerock/json/JsonValue</className>
+  <differenceType>7002</differenceType>
+  <method>java.util.Set asSet(java.lang.Class)</method>
+  <justification>Removal of the set-backing feature</justification>
+ </difference>
+ <difference>
+  <className>org/forgerock/json/JsonValue</className>
+  <differenceType>7002</differenceType>
+  <method>java.util.Set asSet(org.forgerock.util.Function)</method>
+  <justification>Removal of the set-backing feature</justification>
+ </difference>
+ <difference>
+  <className>org/forgerock/json/JsonValue</className>
+  <differenceType>7002</differenceType>
+  <method>boolean isSet()</method>
+  <justification>Removal of the set-backing feature</justification>
+ </difference>
+ <difference>
+  <className>org/forgerock/json/JsonValue</className>
+  <differenceType>7002</differenceType>
+  <method>java.nio.charset.Charset asCharset()</method>
+  <justification>Removal of deprecated asCharset() method</justification>
+ </difference>
+ <difference>
+  <className>org/forgerock/json/JsonValue</className>
+  <differenceType>7002</differenceType>
+  <method>java.lang.Enum asEnum(java.lang.Class)</method>
+  <justification>Removal of deprecated asEnum(Class) method</justification>
+ </difference>
+ <difference>
+  <className>org/forgerock/json/JsonValue</className>
+  <differenceType>7002</differenceType>
+  <method>java.io.File asFile()</method>
+  <justification>Removal of deprecated asFile() method</justification>
+ </difference>
+ <difference>
+  <className>org/forgerock/json/JsonValue</className>
+  <differenceType>7002</differenceType>
+  <method>java.util.List asList(org.forgerock.util.Function)</method>
+  <justification>Removal of deprecated asList(Function) method</justification>
+ </difference>
+ <difference>
+  <className>org/forgerock/json/JsonValue</className>
+  <differenceType>7002</differenceType>
+  <method>java.util.regex.Pattern asPattern()</method>
+  <justification>Removal of deprecated asPattern() method</justification>
+ </difference>
+ <difference>
+  <className>org/forgerock/json/JsonValue</className>
+  <differenceType>7002</differenceType>
+  <method>org.forgerock.json.JsonPointer asPointer()</method>
+  <justification>Removal of deprecated asPointer() method</justification>
+ </difference>
+ <difference>
+  <className>org/forgerock/json/JsonValue</className>
+  <differenceType>7002</differenceType>
+  <method>java.net.URI asURI()</method>
+  <justification>Removal of deprecated asURI() method</justification>
+ </difference>
+ <difference>
+  <className>org/forgerock/json/JsonValue</className>
+  <differenceType>7002</differenceType>
+  <method>java.net.URL asURL()</method>
+  <justification>Removal of deprecated asURL() method</justification>
+ </difference>
+ <difference>
+  <className>org/forgerock/json/JsonValue</className>
+  <differenceType>7002</differenceType>
+  <method>java.util.UUID asUUID()</method>
+  <justification>Removal of deprecated asUUID() method</justification>
+ </difference>
+ <difference>
+  <className>org/forgerock/json/JsonValueKeyAccessChecker</className>
+  <differenceType>7002</differenceType>
+  <method>java.nio.charset.Charset asCharset()</method>
+  <justification>Removal of deprecated asCharset() method</justification>
+ </difference>
+ <difference>
+  <className>org/forgerock/json/JsonValueKeyAccessChecker</className>
+  <differenceType>7002</differenceType>
+  <method>java.lang.Enum asEnum(java.lang.Class)</method>
+  <justification>Removal of deprecated asEnum(Class) method</justification>
+ </difference>
+ <difference>
+  <className>org/forgerock/json/JsonValueKeyAccessChecker</className>
+  <differenceType>7002</differenceType>
+  <method>java.io.File asFile()</method>
+  <justification>Removal of deprecated asFile() method</justification>
+ </difference>
+ <difference>
+  <className>org/forgerock/json/JsonValueKeyAccessChecker</className>
+  <differenceType>7002</differenceType>
+  <method>java.util.List asList(org.forgerock.util.Function)</method>
+  <justification>Removal of deprecated asList(Function) method</justification>
+ </difference>
+ <difference>
+  <className>org/forgerock/json/JsonValueKeyAccessChecker</className>
+  <differenceType>7002</differenceType>
+  <method>java.util.regex.Pattern asPattern()</method>
+  <justification>Removal of deprecated asPattern() method</justification>
+ </difference>
+ <difference>
+  <className>org/forgerock/json/JsonValueKeyAccessChecker</className>
+  <differenceType>7002</differenceType>
+  <method>org.forgerock.json.JsonPointer asPointer()</method>
+  <justification>Removal of deprecated asPointer() method</justification>
+ </difference>
+ <difference>
+  <className>org/forgerock/json/JsonValueKeyAccessChecker</className>
+  <differenceType>7002</differenceType>
+  <method>java.net.URI asURI()</method>
+  <justification>Removal of deprecated asURI() method</justification>
+ </difference>
+ <difference>
+  <className>org/forgerock/json/JsonValueKeyAccessChecker</className>
+  <differenceType>7002</differenceType>
+  <method>java.net.URL asURL()</method>
+  <justification>Removal of deprecated asURL() method</justification>
+ </difference>
+ <difference>
+  <className>org/forgerock/json/JsonValueKeyAccessChecker</className>
+  <differenceType>7002</differenceType>
+  <method>java.util.UUID asUUID()</method>
+  <justification>Removal of deprecated asUUID() method</justification>
+ </difference>
+ <difference>
+  <className>org/forgerock/json/JsonValue</className>
+  <differenceType>7002</differenceType>
+  <method>org.forgerock.json.JsonValue recordKeyAccesses()</method>
+  <justification>Removal of the unused JsonValueKeyAccessChecker feature</justification>
+ </difference>
+ <difference>
+  <className>org/forgerock/json/JsonValue</className>
+  <differenceType>7002</differenceType>
+  <method>void verifyAllKeysAccessed()</method>
+  <justification>Removal of the unused JsonValueKeyAccessChecker feature</justification>
+ </difference>
+ <difference>
+  <className>org/forgerock/json/JsonValueKeyAccessChecker</className>
+  <differenceType>8001</differenceType>
+  <justification>Removal of the unused JsonValueKeyAccessChecker feature</justification>
+ </difference>
+ <difference>
+  <className>org/forgerock/json/JsonTransformer</className>
+  <differenceType>8001</differenceType>
+  <justification>Removal of the JsonTransformer feature</justification>
+ </difference>
+ <difference>
+  <className>org/forgerock/json/JsonValue</className>
+  <differenceType>7002</differenceType>
+  <method>JsonValue(java.lang.Object, java.util.Collection)</method>
+  <justification>Removal of the JsonTransformer feature</justification>
+ </difference>
+ <difference>
+  <className>org/forgerock/json/JsonValue</className>
+  <differenceType>7002</differenceType>
+  <method>JsonValue(java.lang.Object, org.forgerock.json.JsonPointer, java.util.Collection)</method>
+  <justification>Removal of the JsonTransformer feature</justification>
+ </difference>
+ <difference>
+  <className>org/forgerock/json/JsonValue</className>
+  <differenceType>7002</differenceType>
+  <method>void applyTransformers()</method>
+  <justification>Removal of the JsonTransformer feature</justification>
+ </difference>
+ <difference>
+  <className>org/forgerock/json/JsonValue</className>
+  <differenceType>7002</differenceType>
+  <method>java.util.List getTransformers()</method>
+  <justification>Removal of the JsonTransformer feature</justification>
+ </difference>
+ <difference>
+  <className>org/forgerock/json/JsonValueKeyAccessChecker</className>
+  <differenceType>7002</differenceType>
+  <method>void applyTransformers()</method>
+  <justification>Removal of the JsonTransformer feature</justification>
+ </difference>
+ <difference>
+  <className>org/forgerock/json/JsonValueKeyAccessChecker</className>
+  <differenceType>7002</differenceType>
+  <method>java.util.List getTransformers()</method>
+  <justification>Removal of the JsonTransformer feature</justification>
+ </difference>
+ <difference>
+  <className>org/forgerock/util/AsyncFunction</className>
+  <differenceType>7012</differenceType>
+  <method>java.lang.Object apply(java.lang.Object)</method>
+  <justification>This method has not changed since Commons 20.x (false positive?).</justification>
+ </difference>
+</differences>

@@ -1,0 +1,16 @@
+{
+  "name" : "emailUsername",
+  "emailServiceUrl": "/email",
+  "emailServiceParameters" : {
+    "someflag" : "true"
+  },
+  "from": "info@admin.org",
+  "mimeType": "text/html",
+  "subjectTranslations": {
+    "en": "Account Information - username"
+  },
+  "messageTranslations": {
+    "en": "<h3>Username is:</h3><br />%username%"
+  },
+  "usernameToken": "%username%"
+}

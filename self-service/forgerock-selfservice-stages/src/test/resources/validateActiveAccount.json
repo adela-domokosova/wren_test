@@ -1,0 +1,5 @@
+{
+    "name" : "validateActiveAccount",
+    "accountStatusField" : "accountStatus",
+    "validStatusValue" : "active"
+}

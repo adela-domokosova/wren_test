@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+  <body>
+    The Wren Security I18N Framework for Java provides an easy to use type safe
+    API for obtaining localizable messages.
+    <br>
+    <h1>Getting started</h1>
+    In order to get started using this framework you should first define some
+    localized messages in property files and locate these in your resource
+    directory. For example, consider the following simple properties files:
+    <ul>
+      <li><b>src/main/resources/com/example/myapp/core.properties</b>
+        <table bgcolor="#cccccc" border="0" cellpadding="2" cellspacing="2" width="100%">
+          <caption></caption>
+          <tbody>
+            <tr>
+              <pre>
+    MESSAGE_WITH_NO_ARGS=Message with no args
+    MESSAGE_WITH_STRING=Arg1=%s
+    MESSAGE_WITH_STRING_AND_NUMBER=Arg1=%s Arg2=%d
+              </pre>
+            </tr>
+          </tbody>
+        </table>
+      </li>
+      <li><b>src/main/resources/com/example/myapp/core_fr.properties</b>
+        <table bgcolor="#cccccc" border="0" cellpadding="2" cellspacing="2" width="100%">
+          <caption></caption>
+          <tbody>
+            <tr>
+              <pre>
+    MESSAGE_WITH_NO_ARGS=French message with no args
+    MESSAGE_WITH_STRING=French Arg1=%s
+    MESSAGE_WITH_STRING_AND_NUMBER=French Arg1=%s Arg2=%d</pre>
+            </tr>
+          </tbody>
+        </table>
+      </li>
+    </ul>
+    Once you have your property files defined you can use the
+    <b>i18n-maven-plugin</b> to generate the messages. To do this, add the
+    following lines to your pom.xml:
+    <pre>  &lt;build&gt;
+    &lt;plugins&gt;
+      &lt;plugin&gt;
+        &lt;groupId&gt;org.wrensecurity.commons&lt;/groupId&gt;
+        &lt;artifactId&gt;i18n-maven-plugin&lt;/artifactId&gt;
+        &lt;version&gt;${project.version}&lt;/version&gt;
+        &lt;executions&gt;
+          &lt;execution&gt;
+            &lt;phase&gt;generate-sources&lt;/phase&gt;
+            &lt;goals&gt;
+              &lt;goal&gt;generate-messages&lt;/goal&gt;
+            &lt;/goals&gt;
+            &lt;configuration&gt;
+              &lt;messageFiles&gt;
+                &lt;messageFile&gt;com/example/myapp/core.properties&lt;/messageFile&gt;
+              &lt;/messageFiles&gt;
+            &lt;/configuration&gt;
+          &lt;/execution&gt;
+        &lt;/executions&gt;
+      &lt;/plugin&gt;
+    &lt;/plugins&gt;
+  &lt;/build&gt;
+    </pre>
+    This will generate a Java file in
+    <b>target/generated-sources/messages/com/example/myapp/CoreMessages.java</b>
+    containing {@link org.forgerock.i18n.LocalizableMessageDescriptor}s for each
+    message contained in the property file. For example:
+    <pre>  public final class CoreMessages {
+    ...
+
+    /**
+    * Message with no args
+    */
+    public static final LocalizableMessageDescriptor.Arg0 MESSAGE_WITH_NO_ARGS =
+            new LocalizableMessageDescriptor.Arg0(CoreMessages.class,RESOURCE,"MESSAGE_WITH_NO_ARGS",-1);
+
+    /**
+    * Arg1=%s
+    */
+    public static final LocalizableMessageDescriptor.Arg1&lt;CharSequence&gt; MESSAGE_WITH_STRING =
+            new LocalizableMessageDescriptor.Arg1&lt;CharSequence&gt;(CoreMessages.class,RESOURCE,"MESSAGE_WITH_STRING",-1);
+
+    /**
+    * Arg1=%s Arg2=%d
+    */
+    public static final LocalizableMessageDescriptor.Arg2&lt;CharSequence,Number&gt; MESSAGE_WITH_STRING_AND_NUMBER =
+            new LocalizableMessageDescriptor.Arg2&lt;CharSequence,Number&gt;(CoreMessages.class,RESOURCE,"MESSAGE_WITH_STRING_AND_NUMBER",-1);
+
+  }
+    </pre>
+    To use the generated messages you'll need the following dependency:
+    <pre>
+  &lt;groupId&gt;org.wrensecurity.commons&lt;/groupId&gt;
+  &lt;artifactId&gt;i18n-core&lt;/artifactId&gt;
+  &lt;version&gt;${project.version}&lt;/version&gt;
+  &lt;scope&gt;compile&lt;/scope&gt;
+    </pre>
+    Messages can then be instantiated in a type safe manner which is enforced at
+    compile time (unlike CAL10N) as well as avoiding runtime errors due to
+    missing properties (CAL10N has this too):
+    <pre>
+  LocalizableMessage m = MESSAGE_WITH_STRING_AND_NUMBER.get("a string", 123);
+  String s1 = m.toString(); // Default locale.
+  String s2 = m.toString(Locale.FRENCH);
+
+  // Using SLF4J support: using logger "com.example.mayapp.core" and default locale.
+  LocalizedLogger logger = LocalizedLoggerFactory.getInstance(CoreMessages.resourceName());
+  logger.error(MESSAGE_WITH_STRING_AND_NUMBER, "a string", 123);
+    </pre>
+    Note that it is also possible to associated an ordinal with each message by
+    appending a number to the end of the property name. For example, the following
+    message will have the ordinal 389:
+    <ul>
+      <li><b>src/main/resources/com/example/myapp/core.properties</b>
+        <table bgcolor="#cccccc" border="0" cellpadding="2" cellspacing="2" width="100%">
+          <caption></caption>
+          <tbody>
+            <tr bgcolor="#cccccc">
+              <pre>MESSAGE_WITH_ORDINAL_389=Message with ordinal</pre>
+            </tr>
+          </tbody>
+        </table>
+      </li>
+    </ul>
+    The ordinal can be retrieved by calling the method
+    {@link org.forgerock.i18n.LocalizableMessage#ordinal()}. This allows each
+    message to be uniquely identified by its ordinal and its resource name
+    (e.g. "com.example.mayapp.core"), the latter being obtained by calling the
+    method {@link org.forgerock.i18n.LocalizableMessage#resourceName()} which is
+    also available in each generated message file. The ability to uniquely identify
+    log messages is useful when diagnosing log messages which have been output in a
+    locale that you don't understand.
+  </body>
+</html>

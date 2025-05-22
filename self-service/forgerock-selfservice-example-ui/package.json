@@ -1,0 +1,15 @@
+{
+  "name": "@wrensecurity/self-service-example-ui",
+  "description": "Wren Security Commons Self Service - Example UI",
+  "private": true,
+  "scripts": {
+    "build": "gulp prod",
+    "start": "gulp dev",
+    "postdeps": "npm shrinkwrap --include=dev"
+  },
+  "devDependencies": {
+    "@wrensecurity/commons-ui-build": "file:target/ui-libs/wrensecurity-commons-ui-build-0.0.0.tgz",
+    "@wrensecurity/eslint-config": "^0.3.0",
+    "gulp": "^4.0.2"
+  }
+}

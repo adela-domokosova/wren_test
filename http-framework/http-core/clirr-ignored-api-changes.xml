@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ The contents of this file are subject to the terms of the Common Development and
+  ~ Distribution License (the License). You may not use this file except in compliance with the License.
+  ~
+  ~ You can obtain a copy of the License at legal/CDDLv1.0.txt. See the License for the
+  ~ specific language governing permission and limitations under the License.
+  ~
+  ~ When distributing Covered Software, include this CDDL Header Notice in each file and include
+  ~ the License file at legal/CDDLv1.0.txt. If applicable, add the following below the CDDL
+  ~ Header, with the fields enclosed by brackets [] replaced by your own identifying
+  ~ information: "Portions copyright [year] [name of copyright owner]".
+  ~
+  ~ Copyright 2016 ForgeRock AS.
+  ~ Portions Copyright 2018 Wren Security.
+  -->
+<differences>
+<!--
+  <difference>
+    <className>**/example/*Remote</className>
+    <differenceType>...</differenceType>
+    <field>my*</field>
+    <method>MyObject* method(int, java.lang.String)</method>
+    <from>...</from>
+    <to>...</to>
+  </difference>
+-->
+  <difference>
+    <className>org/forgerock/http/HttpApplication</className>
+    <differenceType>6001</differenceType>
+    <field>LOGGER</field>
+  </difference>
+  <difference>
+    <className>org/forgerock/http/handler/Handlers</className>
+    <differenceType>7006</differenceType>
+    <method>org.forgerock.http.Handler filtered(org.forgerock.http.Handler, org.forgerock.http.Filter)</method>
+    <to>org.forgerock.http.handler.DescribableHandler</to>
+  </difference>
+  <difference>
+    <className>org/forgerock/http/handler/Handlers</className>
+    <differenceType>7006</differenceType>
+    <method>org.forgerock.http.Handler chainOf(org.forgerock.http.Handler, org.forgerock.http.Filter[])</method>
+    <to>org.forgerock.http.handler.DescribableHandler</to>
+  </difference>
+  <difference>
+    <className>org/forgerock/http/handler/Handlers</className>
+    <differenceType>7006</differenceType>
+    <method>org.forgerock.http.Handler chainOf(org.forgerock.http.Handler, java.util.List)</method>
+    <to>org.forgerock.http.handler.DescribableHandler</to>
+  </difference>
+  <difference>
+    <className>org/forgerock/http/io/BranchingInputStream</className>
+    <differenceType>7004</differenceType>
+    <method>BranchingInputStream()</method>
+  </difference>
+  <difference>
+    <className>org/forgerock/http/io/BranchingInputStream</className>
+    <differenceType>7009</differenceType>
+    <method>BranchingInputStream()</method>
+  </difference>
+  <difference>
+    <className>org/forgerock/http/io/Buffer</className>
+    <differenceType>7012</differenceType>
+    <method>void append(byte)</method>
+  </difference>
+  <difference>
+    <className>org/forgerock/http/io/Buffer</className>
+    <differenceType>7012</differenceType>
+    <method>byte read(int)</method>
+  </difference>
+  <difference>
+    <className>org/forgerock/services/routing/AbstractRouter</className>
+    <differenceType>7013</differenceType>
+    <method>org.forgerock.services.routing.RouteMatcher uriMatcher(org.forgerock.http.routing.RoutingMode, java.lang.String)</method>
+  </difference>
+  <difference>
+    <className>org/forgerock/services/routing/RouteMatcher</className>
+    <differenceType>7013</differenceType>
+    <method>java.lang.String idFragment()</method>
+  </difference>
+  <difference>
+    <className>org/forgerock/services/routing/RouteMatcher</className>
+    <differenceType>7013</differenceType>
+    <method>java.lang.Object transformApi(java.lang.Object, org.forgerock.http.ApiProducer)</method>
+  </difference>
+  <difference>
+    <className>org/forgerock/http/protocol/Response</className>
+    <differenceType>7002</differenceType>
+    <method>Response()</method>
+    <comment>CHF-47 Make Response constructor require a Status</comment>
+  </difference>
+  <difference>
+    <className>org/forgerock/services/routing/AbstractRouter</className>
+    <differenceType>7013</differenceType>
+    <method>org.forgerock.util.Pair getSelfApiHandler()</method>
+    <comment>RAPID-203 Router never returns own API when routing API request</comment>
+  </difference>
+  <difference>
+    <className>org/forgerock/http/decoder/Decoder</className>
+    <differenceType>7012</differenceType>
+    <method>java.lang.Object getKey()</method>
+    <comment>This method has not changed since Commons 20.x (false positive?).</comment>
+  </difference>
+</differences>

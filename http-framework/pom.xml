@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    The contents of this file are subject to the terms of the Common Development and
+    Distribution License (the License). You may not use this file except in compliance with the
+    License.
+
+    You can obtain a copy of the License at legal/CDDLv1.1.txt. See the License for the
+    specific language governing permission and limitations under the License.
+
+    When distributing Covered Software, include this CDDL Header Notice in each file and include
+    the License file at legal/CDDLv1.1.txt. If applicable, add the following below the CDDL
+    Header, with the fields enclosed by brackets [] replaced by your own identifying
+    information: "Portions copyright [year] [name of copyright owner]".
+
+    Copyright 2010–2011 ApexIdentity Inc.
+    Portions Copyright 2011-2016 ForgeRock AS.
+    Portions Copyright 2017-2021 Wren Security.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.wrensecurity.commons</groupId>
+    <artifactId>commons-parent</artifactId>
+    <version>22.7.0-SNAPSHOT</version>
+  </parent>
+
+  <groupId>org.wrensecurity.http</groupId>
+  <artifactId>forgerock-http-framework-parent</artifactId>
+  <packaging>pom</packaging>
+
+  <name>Wren Security Commons HTTP - Framework</name>
+  <description>
+       The HTTP framework provides a uniform client/server HTTP API, which is
+       script friendly, and includes adapters for various common HTTP libraries
+       such as Servlet, Apache HTTP Clients, and Grizzly.
+  </description>
+
+  <modules>
+    <module>http-core</module>
+    <module>http-servlet</module>
+    <module>http-grizzly</module>
+    <module>http-client-apache-common</module>
+    <module>http-client-apache-sync</module>
+    <module>http-client-apache-async</module>
+    <module>http-examples</module>
+    <module>binding-test-utils</module>
+    <module>http-benchmarks</module>
+    <module>http-oauth2</module>
+    <module>http-client-test-utils</module>
+  </modules>
+
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-javadoc-plugin</artifactId>
+
+        <configuration>
+          <excludePackageNames>com.*:*.internal</excludePackageNames>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>clirr-maven-plugin</artifactId>
+
+        <configuration>
+          <comparisonVersion>20.0.0</comparisonVersion>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <dependencyManagement>
+    <dependencies>
+
+      <dependency>
+        <groupId>org.codehaus.groovy</groupId>
+        <artifactId>groovy-jsr223</artifactId>
+        <version>3.0.10</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.xebialabs.restito</groupId>
+        <artifactId>restito</artifactId>
+        <version>0.9.4</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.wrensecurity.http</groupId>
+        <artifactId>binding-test-utils</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.wrensecurity.http</groupId>
+        <artifactId>http-client-test-utils</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <profiles>
+    <profile>
+      <id>benchmarks</id>
+
+      <modules>
+        <module>http-benchmarks</module>
+      </modules>
+    </profile>
+  </profiles>
+</project>
