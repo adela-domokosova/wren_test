@@ -91,7 +91,6 @@
         <wrenBuildToolsVersion>1.2.0</wrenBuildToolsVersion>
         <pmdPluginVersion>3.21.2</pmdPluginVersion>
         <jxrPluginVersion>3.3.2</jxrPluginVersion>
-        <sonar.java.pmd.reportPaths>target/pmd.xml</sonar.java.pmd.reportPaths>
     </properties>
 
     <dependencyManagement>
@@ -189,7 +188,6 @@
                             <consoleOutput>true</consoleOutput>
                             <failsOnError>false</failsOnError>
                             <outputFileFormat>xml</outputFileFormat>
-                            <outputDirectory>${project.build.directory}/checkstyle-reports</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>
@@ -206,9 +204,9 @@
 
                 <executions>
                     <execution>
-                        <phase>verify</phase> <!-- zde určuješ fázi -->
+                        <phase>verify</phase>
                         <goals>
-                            <goal>check</goal> <!-- nebo `spotbugs`, viz níže -->
+                            <goal>check</goal>
                         </goals>
                     </execution>
                 </executions>
