@@ -36,6 +36,6 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: mvn -B -P metrics verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
           -Dsonar.organization=wren \
-          -Dsonar.host.url=https://sonarcloud.io \
+          -Dsonar.host.url=sonarcloud.io \
           -Dsonar.projectKey=wren_test-commons -Dsonar.java.pmd.reportPaths=target/pmd.xml \
           -Dsonar.java.checkstyle.reportPaths=target/checkstyle-result.xml
