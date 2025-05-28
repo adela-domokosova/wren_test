@@ -91,6 +91,7 @@
         <wrenBuildToolsVersion>1.2.0</wrenBuildToolsVersion>
         <pmdPluginVersion>3.21.2</pmdPluginVersion>
         <jxrPluginVersion>3.3.2</jxrPluginVersion>
+        <sonar.java.pmd.reportPaths>target/pmd.xml</sonar.java.pmd.reportPaths>
     </properties>
 
     <dependencyManagement>
