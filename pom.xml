@@ -163,55 +163,6 @@
                 <artifactId>sonar-maven-plugin</artifactId>
                 <version>5.1.0.4751</version>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-pmd-plugin</artifactId>
-                <version>${pmdPluginVersion}</version>
-                <executions>
-                    <execution>
-                        <id>pmd-analysis</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>pmd</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>${checkstylePluginVersion}</version>
-                <executions>
-                    <execution>
-                        <id>checkstyle-validation</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>checkstyle</goal>
-                        </goals>
-                        <configuration>
-                            <configLocation>org/forgerock/checkstyle/check-src-default.xml</configLocation>
-                            <encoding>UTF-8</encoding>
-                            <consoleOutput>true</consoleOutput>
-                            <failsOnError>false</failsOnError>
-                            <outputFileFormat>xml</outputFileFormat>
-                            <outputDirectory>${project.build.directory}/checkstyle-reports</outputDirectory>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>com.github.spotbugs</groupId>
-                <artifactId>spotbugs-maven-plugin</artifactId>
-                <version>${spotbugsPluginVersion}</version>
-
-                <configuration>
-                    <xmlOutput>true</xmlOutput>
-                    <spotbugsXmlOutput>true</spotbugsXmlOutput>
-                    <effort>Max</effort>
-                    <failThreshold>Low</failThreshold>
-                    <failOnError>false</failOnError>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
 
