@@ -37,10 +37,11 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
       - name: Build and Analyze
         run: |
-         mvn -B -P metrics verify sonar:sonar \
+         mvn -B -Pmetrics verify sonar:sonar \
             -Dsonar.organization=wren \
             -Dsonar.host.url=https://sonarcloud.io \
             -Dsonar.projectKey=wren_test-commons \
+            -Dsonar.java.jacoco.reportPaths=target/jacoco.xml \
             -Dsonar.java.pmd.reportPaths=target/pmd.xml \
             -Dsonar.java.checkstyle.reportPaths=target/checkstyle-result.xml \
             -Dsonar.java.spotbugs.reportPaths=target/spotbugs.xml
