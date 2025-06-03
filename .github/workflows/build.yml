@@ -18,37 +18,20 @@ jobs:
         with:
           distribution: "temurin"
           java-version: "${{ matrix.java }}"
-          cache: "maven"
-      - name: Check
-        run: mvn -B verify
-
-  sonar:
-    name: SonarQube Analysis
-    runs-on: ubuntu-latest
-    if: |
-      (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
-      (github.event_name == 'pull_request' &&
-        (github.event.action == 'opened' ||
-         github.event.action == 'synchronize' ||
-         github.event.action == 'reopened'))
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Set up Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: "temurin"
-          java-version: 17
-      - name: Build and Analyze
+          cache: maven
+      - name: Build, Test and Analyze
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-         mvn -B -Pmetrics verify sonar:sonar \
-            -Dsonar.organization=wren \
-            -Dsonar.host.url=https://sonarcloud.io \
-            -Dsonar.projectKey=wren_test-commons \
-            -Dsonar.java.jacoco.reportPaths=target/jacoco.xml \
-            -Dsonar.java.pmd.reportPaths=target/pmd.xml \
-            -Dsonar.java.checkstyle.reportPaths=target/checkstyle-result.xml \
-            -Dsonar.java.spotbugs.reportPaths=target/spotbugs.xml
+          mvn -B -Pmetrics verify
+          if [ "${{ matrix.java }}" = "17" ]; then
+            mvn sonar:sonar \
+              -Dsonar.organization=wren \
+              -Dsonar.host.url=https://sonarcloud.io \
+              -Dsonar.projectKey=wren_test-commons \
+              -Dsonar.java.jacoco.reportPaths=target/jacoco.xml \
+              -Dsonar.java.pmd.reportPaths=target/pmd.xml \
+              -Dsonar.java.checkstyle.reportPaths=target/checkstyle-result.xml \
+              -Dsonar.java.spotbugs.reportPaths=target/spotbugs.xml
+          fi
+
